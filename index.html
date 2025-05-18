@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini E-commerce</title>
+  <style>
+    
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f6f8fa;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #2c3e50;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.product {
+  background-color: white;
+  border-radius: 15px;
+  padding: 15px;
+  width: 220px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product img {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.buy-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buy-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.top-product {
+  background: #e8f0fe;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 5px solid #3498db;
+  margin: 30px auto;
+  width: 60%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Popup Form */
+.popup-overlay {
+  position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+}
+.popup-form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
+
+    .popup-form input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .popup-form button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .popup-form button:hover {
+      background-color: #0056b3;
+    }
+
+    .close-btn {
+      background: transparent;
+      color: red;
+      border: none;
+      font-size: 18px;
+      float: right;
+      cursor: pointer;
+    }
+
+ </style>
+</head>
+<body>
+  <h1>Ma boutique en ligne</h1>
+  <div id="product-list"></div>
+
+  <div class="top-product">
+    <h2>🔥 Produit le plus vendu</h2>
+    <p id="top-product">Chargement...</p>
+  </div>
+
+  <div class="product-container">
+    <div class="product">
+      <img src="https://images.pexels.com/photos/3585797/pexels-photo-3585797.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Produit 1">
+      <h3>Airpod</h3>
+      <p>Avec réduction de bruit.</p>
+      <button class="buy-button" onclick="openForm('Casque Bluetooth')">Acheter</button>
+    </div>
+    <!-- Les 4 autres produits -->
+    <div class="product">
+      <img src="https://th.bing.com/th/id/R.35f198c1c756123d16a76f0f35f11a70?rik=3fnVWEG2RY%2b1Gg&pid=ImgRaw&r=0">
+      <h3>Montre connectée</h3>
+      <p>Suivi de santé et notifications.</p>
+      <button class="buy-button" onclick="openForm('Montre connectée')">Acheter</button>
+    </div>
+
+    <div class="product">
+      <img src="https://www.cdiscount.com/pdt2/0/5/7/1/700x700/auc3082600935057/rw/ecouteurs-filaires-ecouteurs-intra-auriculaires-e.jpg" alt="Produit 3">
+      <h3>Ecouteurs filaires</h3>
+      <p>FT0300 In-Ear Stereo.</p>
+      <button class="buy-button" onclick="openForm('Ecouteurs filaires')">Acheter</button>
+    </div>
+
+    <div class="product">
+      <img src="https://th.bing.com/th/id/R.46fad55609b9bd148e8064fdb2dccb78?rik=4AqOUQhtNVoyNQ&pid=ImgRaw&r=0" alt="Produit 4">
+      <h3>Power Bank</h3>
+      <p>Durable pour les voyages ou l’école.</p>
+      <button class="buy-button" onclick="openForm('Power Bank')">Acheter</button>
+    </div>
+
+    <div class="product">
+      <img src="https://th.bing.com/th/id/R.9bf53550be00f50f942cf8538982c76f?rik=Scn0yyCUhqHtZg&riu=http%3a%2f%2fwww.mobexmobile.com%2fstorage%2fmc01-tc.jpg&ehk=eMZQhjAuT4dD7lQ1Sl33F1rbwZlVJFFgj7otsj2VfX4%3d&risl=&pid=ImgRaw&r=0" alt="Produit 5">
+      <h3>Chargeur rapide</h3>
+      <p>USB-C 30W pour téléphone et tablette.</p>
+      <button class="buy-button" onclick="openForm('Chargeur rapide')">Acheter</button>
+    </div>
+  </div>
+
+  <!-- Popup formulaire -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-form">
+      <button class="close-btn" onclick="closeForm()">×</button>
+      <h3>Formulaire de commande</h3>
+      <input type="text" id="prenom" placeholder="Prénom">
+      <input type="text" id="nom" placeholder="Nom">
+      <input type="text" id="adresse" placeholder="Adresse">
+      <input type="email" id="email" placeholder="Email">
+      <button onclick="submitForm()">Envoyer</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedProduct = "";
+
+    function openForm(product) {
+      selectedProduct = product;
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function closeForm() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    async function submitForm() {
+
+      const nom = document.getElementById("nom").value;
+      const prenom = document.getElementById("prenom").value;
+      const adresse = document.getElementById("adresse").value;
+      const email = document.getElementById("email").value;
+
+      if (!nom || !prenom || !adresse || !email) {
+
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
+      const commande = {
+    produit: selectedProduct,
+    quantite: 1,
+
+
+  };
+
+  try {
+
+    const response = await fetch('http://localhost:4000/commandes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(commande)
+    });
+
+    if (response.ok) {
+
+      alert('Commande envoyée avec succès !');
+      closeForm();
+    } else {
+
+      alert('Erreur lors de l’envoi de la commande');
+    }
+  } catch (err) {
+
+    alert('Erreur réseau ou serveur');
+    console.error(err);
+  }
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+const products = ["Airpod", "Montre connectée", "Ecouteurs filaires", "Power Bank", "Chargeur rapide"];
+
+async function sendFakeOrder(produit) {
+  const commande = { produit, quantite: 1 };
+  await fetch('http://localhost:4000/commandes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(commande)
+  });
+  console.log(`Commande envoyée: ${produit}`);
+}
+
+async function simulateOrders(count = 50) {
+  for (let i = 0; i < count; i++) {
+    const produit = products[Math.floor(Math.random() * products.length)];
+    await sendFakeOrder(produit);
+    await new Promise(r => setTimeout(r, 100)); // délai pour pas surcharger
+  }
+  console.log('Simulation terminée.');
+}
+
+simulateOrders();
