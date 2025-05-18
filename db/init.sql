@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS commandes (
+    id SERIAL PRIMARY KEY,
+    produit TEXT NOT NULL,
+    quantite INT NOT NULL,
+    email TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS top_products (
+    produit TEXT PRIMARY KEY,
+    count INT DEFAULT 0
+);
