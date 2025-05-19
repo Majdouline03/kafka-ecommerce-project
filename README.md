@@ -202,8 +202,6 @@ MAIL_PASS=ton-mailtrap-motdepasse
 
 Ces variables sont utilisées dans le **consumer email** pour envoyer un email de confirmation de commande.
 
----
-
 ### 🛢 PostgreSQL
 
 - `PGUSER` : nom d’utilisateur de la base
